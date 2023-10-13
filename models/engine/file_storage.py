@@ -4,6 +4,8 @@ import datetime
 import json
 import os
 
+#circular imports
+
 
 class FileStorage:
 
@@ -18,8 +20,28 @@ class FileStorage:
 
     def new(self, obj):
         """Sets new obj in __objects dictionary."""
-        key = "{}.{}".format(type(obj).__name__, obj.id)
-        FileStorage.__objects[key] = obj
+        objname = obj.__class__.__name__
+        obj = FileStorage.__objects["{}.{}".format(objname, obj.id)]
+    
+
+    def save(self):
+        """Serialzes __objects to JSON file."""
+        storing= FileStorage.__objects
+        objectdict = {obj: storing[obj].to_dict() for obj in storing.keys()}
+        with open(FileStorage.__file_path, "w") as f:
+            json.dump(objectdict, f)
+
+    def reload(self):
+        """derialiaztion of objects to the Json file __file_path"""
+        try:
+            with open(FileStorage.__file_path)as i:
+                objdict = json.load(f)
+                for i in objectdict.values():
+                    classname= i["__class__"]
+                    del i["__class__"]
+                    self.new(eval(classname)(**i))
+        except FileNotFoundError:
+            pass
 
     def classes(self):
         """retrurns a dictionery of valid classes and their refernces"""
@@ -36,25 +58,8 @@ class FileStorage:
                     }
         return classes
 
-    def save(self):
-        """Serialzes __objects to JSON file."""
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
-            d = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
-            json.dump(d, f)
-
-    def reload(self):
-        """Deserializes JSON file into __objects."""
-        if not os.path.isfile(FileStorage.__file_path):
-            return
-        with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
-            obj_dict = json.load(f)
-            obj_dict = {k: self.classes()[v["__class__"]](**v)
-                        for k, v in obj_dict.items()}
-
-            FileStorage.__objects = obj_dict
-
     def attributes(self):
-        """returns the valid attributes and their types for classnamea"""
+        """returns the valid attributes and their types for classnames"""
         attributes = {
             "BaseModel":
                      {"id": str,
