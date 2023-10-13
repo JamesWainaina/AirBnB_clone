@@ -1,8 +1,13 @@
 #!/usr/bin/python3
 """Module for FileStorage class."""
-import datetime
 import json
-import os
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 #circular imports
 
@@ -34,8 +39,8 @@ class FileStorage:
     def reload(self):
         """derialiaztion of objects to the Json file __file_path"""
         try:
-            with open(FileStorage.__file_path)as i:
-                objdict = json.load(f)
+            with open(FileStorage.__file_path)as f:
+                objectdict = json.load(f)
                 for i in objectdict.values():
                     classname= i["__class__"]
                     del i["__class__"]
@@ -43,20 +48,7 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
-    def classes(self):
-        """retrurns a dictionery of valid classes and their refernces"""
-        from models.base_model import BaseModel
-        from models.user import User
 
-        classes = {"BaseModel": BaseModel,
-                    "User": User,
-                    "State": State,
-                    "City": City,
-                    "Amenity": Amenity,
-                    "Place":Place,
-                    "Review": Review
-                    }
-        return classes
 
     def attributes(self):
         """returns the valid attributes and their types for classnames"""
