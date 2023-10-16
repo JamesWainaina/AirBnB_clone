@@ -6,11 +6,9 @@ import uuid
 from datetime import datetime
 from models import storage
 
+
 class BaseModel:
-
-
     """class for baseModel"""
-
     def __init__(self, *args, **kwargs):
         """Initialization of a Base instance.
 
@@ -39,8 +37,8 @@ class BaseModel:
         """Returns a human-readable string representation
         of an instance."""
 
-        return "[{}] ({}) {}".format\
-            (type(self).__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".\
+            format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         """Updates the updated_at attribute
