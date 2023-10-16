@@ -4,7 +4,7 @@
 
 import uuid
 from datetime import datetime
-import models
+from models.engine.file_storage import FileStorage
 
 
 
@@ -20,7 +20,6 @@ class BaseModel:
             - *args: list of arguments
             - **kwargs: dict of key-values arguments
         """
-        from models import storage
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
@@ -36,7 +35,7 @@ class BaseModel:
                 else:
                     self.__dict__[key] = kwargs[key]
         else:
-            models.storage.new(self)
+            storage.new(self)
 
     def __str__(self):
         """Returns a human-readable string representation
