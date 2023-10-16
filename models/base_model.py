@@ -36,7 +36,6 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             storage = FileStorage()
-            storage.reload()
             storage.new(self)
 
     def __str__(self):
