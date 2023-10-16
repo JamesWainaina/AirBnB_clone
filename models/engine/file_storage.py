@@ -13,12 +13,10 @@ class FileStorage:
 
     def all(self):
         """Returns __objects dictionary."""
-        # TODO: should this be a copy()?
         return FileStorage.__objects
 
     def new(self, obj):
         """Sets new obj in __objects dictionary."""
-        # TODO: should these be more precise specifiers?
         key = "{}.{}".format(type(obj).__name__, obj.id)
         FileStorage.__objects[key] = obj
 
@@ -44,7 +42,7 @@ class FileStorage:
                    "City": City,
                    "Amenity": Amenity,
                    "Place": Place,
-                   "Review": Review}
+                   "Review": Review }
         return classes
 
     def reload(self):
@@ -55,7 +53,6 @@ class FileStorage:
             obj_dict = json.load(f)
             obj_dict = {k: self.classes()[v["__class__"]](**v)
                         for k, v in obj_dict.items()}
-            # TODO: should this overwrite or insert?
             FileStorage.__objects = obj_dict
 
     def attributes(self):
