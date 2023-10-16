@@ -35,8 +35,8 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage = FileStorage()
-            storage.reload()
+            # storage = FileStorage()
+            # storage.reload()
             storage.new(self)
 
     def __str__(self):
