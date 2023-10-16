@@ -42,7 +42,7 @@ class FileStorage:
                    "City": City,
                    "Amenity": Amenity,
                    "Place": Place,
-                   "Review": Review }
+                   "Review": Review}
         return classes
 
     def reload(self):
