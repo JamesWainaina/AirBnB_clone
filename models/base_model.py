@@ -4,7 +4,7 @@
 
 import uuid
 from datetime import datetime
-from models.engine.file_storage import FileStorage
+import models
 
 
 
@@ -20,10 +20,7 @@ class BaseModel:
             - *args: list of arguments
             - **kwargs: dict of key-values arguments
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
-
+        
         if kwargs is not None and kwargs != {}:
             for key in kwargs:
                 if key == "created_at":
@@ -35,7 +32,11 @@ class BaseModel:
                 else:
                     self.__dict__[key] = kwargs[key]
         else:
-            storage.new(self)
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+
+            models.storage.new(self)
 
     def __str__(self):
         """Returns a human-readable string representation
