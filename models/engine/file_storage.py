@@ -24,7 +24,7 @@ class FileStorage:
         """Serialzes __objects to JSON file."""
         with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
             d = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
-            json.dump(d, f)
+            json.dump(d, f, indent=2)
 
     def classes(self):
         """Returns a dictionary of valid classes and their references."""

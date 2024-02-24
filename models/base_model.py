@@ -5,9 +5,11 @@
 import uuid
 from datetime import datetime
 import models
-class BaseModel:
-    """class for baseModel"""
 
+
+class BaseModel:
+
+    """class for baseModel"""
 
     def __init__(self, *args, **kwargs):
         """Initialization of a Base instance.
@@ -16,7 +18,6 @@ class BaseModel:
             - *args: list of arguments
             - **kwargs: dict of key-values arguments
         """
-        
         if kwargs is not None and kwargs != {}:
             for key in kwargs:
                 if key == "created_at":
@@ -39,7 +40,7 @@ class BaseModel:
         of an instance."""
 
         return "[{}] ({}) {}".\
-            format(type(self).__name__,self.id, self.__dict__)
+            format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         """Updates the updated_at attribute
